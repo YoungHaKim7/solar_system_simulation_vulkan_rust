@@ -1,4 +1,4 @@
-# opencode + claude(glm-5.3) AI(260823)
+# opencode(Ox Alpha) + claude(glm-5.3) AI(260823)
 
 - Done. The 1298-line `main.rs` is now 11 modules, each owning one responsibility:
 
