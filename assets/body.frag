@@ -27,4 +27,4 @@ void main() {
         alpha = max(alpha, clamp(halo, 0.0, 1.0));
     }
     f_color = vec4(col, alpha);
-        }
+}
