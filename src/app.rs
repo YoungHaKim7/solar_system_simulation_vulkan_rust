@@ -147,16 +147,16 @@ impl ApplicationHandler for App {
             }
             WindowEvent::CursorMoved { position, .. } => {
                 let new_pos = (position.x, position.y);
-                if self.dragging {
-                    if let Some(prev) = self.last_cursor {
-                        let height_px = self
-                            .rcx
-                            .as_ref()
-                            .map(|r| r.window.inner_size().height as f64)
-                            .unwrap_or(800.0);
-                        self.camera
-                            .pan(new_pos.0 - prev.0, new_pos.1 - prev.1, height_px);
-                    }
+                if self.dragging
+                    && let Some(prev) = self.last_cursor
+                {
+                    let height_px = self
+                        .rcx
+                        .as_ref()
+                        .map(|r| r.window.inner_size().height as f64)
+                        .unwrap_or(800.0);
+                    self.camera
+                        .pan(new_pos.0 - prev.0, new_pos.1 - prev.1, height_px);
                 }
                 self.last_cursor = Some(new_pos);
             }
@@ -168,21 +168,21 @@ impl ApplicationHandler for App {
             WindowEvent::MouseWheel { delta, .. } => {
                 let factor = match delta {
                     MouseScrollDelta::LineDelta(_, y) => 1.15f64.powf(y as f64),
-                    MouseScrollDelta::PixelDelta(p) => 1.01f64.powf(p.y as f64),
+                    MouseScrollDelta::PixelDelta(p) => 1.01f64.powf(p.y),
                 };
-                if factor.is_finite() && factor != 1.0 {
-                    if let Some(cursor) = self.last_cursor {
-                        if let Some(rcx) = self.rcx.as_ref() {
-                            let size = rcx.window.inner_size();
-                            self.camera.zoom(
-                                factor,
-                                cursor.0,
-                                cursor.1,
-                                size.width as f64,
-                                size.height as f64,
-                            );
-                        }
-                    }
+                if factor.is_finite()
+                    && factor != 1.0
+                    && let Some(cursor) = self.last_cursor
+                    && let Some(rcx) = self.rcx.as_ref()
+                {
+                    let size = rcx.window.inner_size();
+                    self.camera.zoom(
+                        factor,
+                        cursor.0,
+                        cursor.1,
+                        size.width as f64,
+                        size.height as f64,
+                    );
                 }
             }
             WindowEvent::RedrawRequested => {

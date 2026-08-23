@@ -83,7 +83,7 @@ impl App {
                     | MemoryTypeFilter::HOST_RANDOM_ACCESS,
                 ..Default::default()
             },
-            std::iter::repeat(0u8).take((width * height * 4) as usize),
+            std::iter::repeat_n(0u8, (width * height * 4) as usize),
         )
         .unwrap();
 
@@ -127,7 +127,7 @@ impl App {
             Format::B8G8R8A8_UNORM | Format::B8G8R8A8_SRGB | Format::B8G8R8A8_SNORM
         );
         let mut ppm = format!("P6\n{width} {height}\n255\n").into_bytes();
-        for px in data.chunks_exact(4) {
+        for px in data.as_chunks::<4>().0 {
             if bgra {
                 ppm.extend_from_slice(&[px[2], px[1], px[0]]);
             } else {

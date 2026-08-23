@@ -54,11 +54,11 @@ impl Trails {
     }
 
     pub(crate) fn sample(&mut self, t_days: f64, bodies: &[Body]) {
-        for i in 1..self.queues.len() {
+        for (i, body) in bodies.iter().enumerate().take(self.queues.len()).skip(1) {
             if t_days < self.next_sample[i] {
                 continue;
             }
-            let v = trail_vertex(i, &bodies[i]);
+            let v = trail_vertex(i, body);
             let dq = &mut self.queues[i];
             dq.push_back(v);
             if dq.len() > TRAIL_LEN {

@@ -26,3 +26,14 @@
 - The 7 clippy warnings are pre-existing style lints in verbatim-moved code (collapsible `if`s, `repeat().take()`) — I deliberately didn't fold them in, to keep this a pure structural change. Happy to clean them up separately if you want.
 
 Changes are uncommitted, so `git diff` / `git checkout -- src/` reviews or reverts cleanly.
+
+# clippy
+
+- All 7 clippy errors fixed, `cargo clippy --all-features --all-targets -- -D warnings` now passes clean:
+
+- **`src/app.rs:150`** — collapsed `if self.dragging` + `if let Some(prev)` into one let-chain (edition 2024)
+- **`src/app.rs:171`** — dropped the redundant `as f64` on `p.y` (already `f64` in winit's `PhysicalPosition`)
+- **`src/app.rs:173`** — collapsed the three nested ifs (`factor` check + two `if let`s) into a single let-chain
+- **`src/debug.rs:86`** — `repeat(0u8).take(n)` → `repeat_n(0u8, n)`
+- **`src/debug.rs:130`** — `chunks_exact(4)` → `as_chunks::<4>().0`; I verified the return type first (`(&[[u8; 4]], &[u8])` — chunks come first), so `.0` is the chunks, not the remainder
+- **`src/trails.rs:57`** — range loop over queue indices → `bodies.iter().enumerate().take(self.queues.len()).skip(1)`, preserving the exact original bounds (`1..queues.len()`); `px[0]`/`px[1]`/`px[2]` indexing still works since chunks are now `&[u8; 4]`
