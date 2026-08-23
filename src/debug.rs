@@ -1,8 +1,8 @@
 use vulkano::{
     Validated,
-    format::Format,
     buffer::{Buffer, BufferCreateInfo, BufferUsage, Subbuffer},
     command_buffer::{AutoCommandBufferBuilder, CommandBufferUsage, CopyImageToBufferInfo},
+    format::Format,
     image::{Image, ImageCreateInfo, ImageType, ImageUsage, view::ImageView},
     memory::allocator::{AllocationCreateInfo, MemoryTypeFilter},
     pipeline::graphics::viewport::Viewport,

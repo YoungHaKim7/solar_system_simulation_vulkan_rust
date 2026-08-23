@@ -3,8 +3,7 @@ use std::sync::Arc;
 use vulkano::{
     buffer::{Buffer, BufferCreateInfo, BufferUsage, Subbuffer},
     command_buffer::{
-        AutoCommandBufferBuilder, PrimaryAutoCommandBuffer, RenderingAttachmentInfo,
-        RenderingInfo,
+        AutoCommandBufferBuilder, PrimaryAutoCommandBuffer, RenderingAttachmentInfo, RenderingInfo,
     },
     device::Device,
     format::Format,
@@ -132,7 +131,9 @@ impl RenderContext {
             .unwrap()
             .entry_point("main")
             .unwrap();
-        let line_vertex_input = TrailVertex::per_vertex().definition(&line_vs_entry).unwrap();
+        let line_vertex_input = TrailVertex::per_vertex()
+            .definition(&line_vs_entry)
+            .unwrap();
         let line_pipeline = create_graphics_pipeline(
             device,
             &line_vs_entry,

@@ -1,7 +1,4 @@
-use vulkano::{
-    buffer::BufferContents,
-    pipeline::graphics::vertex_input::Vertex,
-};
+use vulkano::{buffer::BufferContents, pipeline::graphics::vertex_input::Vertex};
 
 use crate::{bodies::BODIES, simulation::Body};
 
